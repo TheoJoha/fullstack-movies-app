@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
         pageCount: req.body.pageCount,
         description: req.body.description,
     })
-    savecover(book, req.body.cover)
+    saveCover(book, req.body.cover)
 
     try {
         const newBook = await book.save()
