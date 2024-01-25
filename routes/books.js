@@ -6,7 +6,7 @@ const fs = require("fs")
 const Book = require("../models/book")
 const Author = require("../models/author")
 const uploadPath = path.join("public", Book.coverImageBasePath)
-const imageMimeTypes = ["image/jpeg", "image/jpg", "image/png,", "image/gif"]
+const imageMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"]
 const upload = multer({
     dest: uploadPath,
     fileFilter: (req, file, callback) => {
@@ -14,7 +14,7 @@ const upload = multer({
     }
 })
 
-// All Books routes
+// All Books route
 router.get("/", async (req, res) => {
     let query = Book.find()
     if (req.query.title != null && req.query.title != "") {
@@ -35,7 +35,6 @@ router.get("/", async (req, res) => {
     } catch {
         res.redirect("/")
     }
-
 })
 
 // New Book Route
@@ -51,8 +50,8 @@ router.post("/", upload.single("cover"), async (req, res) => {
         author: req.body.author,
         publishDate: new Date(req.body.publishDate),
         pageCount: req.body.pageCount,
-        coverImageName: fileName,
-        description: req.body.description
+        description: req.body.description,
+        coverImageName: fileName
     })
 
     try {
@@ -68,7 +67,7 @@ router.post("/", upload.single("cover"), async (req, res) => {
 
 function removeBookCover(fileName) {
     fs.unlink(path.join(uploadPath, fileName), err => {
-        console.err(err)
+        if (err) console.err(err)
     })
 }
 

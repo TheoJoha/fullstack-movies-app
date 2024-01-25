@@ -36,7 +36,7 @@ const bookSchema = new mongoose.Schema({
 })
 
 bookSchema.virtual("coverImagePath").get(function() {
-    if(this.coverImage != null) {
+    if (this.coverImage != null) {
         return path.join("/", coverImageBasePath, this.coverImageName)
     }
  })
